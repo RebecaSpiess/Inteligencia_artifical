@@ -123,7 +123,7 @@ if __name__ == "__main__":
 	matriz[2][0] = '1'
 	matriz[2][1] = '2'
 	matriz[2][2] = '2'
-	matriz[2][3] = '2'
+	matriz[2][3] = '1'
 	matriz[2][4] = '1'
 	
 	matriz[3][0] = '1'
