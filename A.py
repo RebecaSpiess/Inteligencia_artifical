@@ -1,12 +1,6 @@
 from math import sqrt
-
-def encontraPosicoes (matriz, linhas, colunas, valor):
-	posicoes = []
-	for i in range(0, linhas):
-		for j in range(0, colunas):
-			if matriz[i][j] == valor:
-				posicoes.append((i, j))
-	return posicoes
+import os
+import csv
 
 def busca_a_estrela (matriz, linhas, colunas, estado_inicial, estados_finais):
 	distancia_meta = {}
@@ -16,8 +10,6 @@ def busca_a_estrela (matriz, linhas, colunas, estado_inicial, estados_finais):
 	estados_expandidos = []
 	solucao_encontrada = False
 	
-
-	# Inicializacao de distancia percorrida (f), distancia ate a meta (g) e heuristica (h = f+g).
 	distancia_percorrida[estado_inicial] = 0
 	distancia_meta[estado_inicial] = calcula_distancia_meta (estado_inicial, estados_finais) 
 	heuristica[estado_inicial] = distancia_percorrida[estado_inicial] + distancia_meta[estado_inicial]
@@ -48,6 +40,14 @@ def busca_a_estrela (matriz, linhas, colunas, estado_inicial, estados_finais):
 		apresenta_solucao (estado, predecessores, iteracao)
 	else:
 		print("Nao foi possivel encontrar uma solucao para o problema.")
+
+def encontraPosicoes (matriz, linhas, colunas, valor):	
+	posicoes = []
+	for i in range(0, linhas):		
+		for j in range(0, colunas):
+			if int(matriz[i][j]) == valor:
+				posicoes.append((i, j))
+	return posicoes
 
 def calcula_distancia_meta (estado, estados_finais):
 	x = estado[0]
@@ -103,35 +103,21 @@ def apresenta_solucao (estado, predecessores, iteracao):
 	print(caminho)
 
 if __name__ == "__main__":
-	linhas = 4
-	colunas = 5
+	problema = open(r"C:\Users\spies\Documents\IA\Inteligencia_artifical\Matriz.csv") 
+	leitor_problema = csv.reader(problema)
+	entrada = list(leitor_problema)
+	valores = entrada[0][0].split(";")
+	linhas = int(valores[1]) # numero de linhas.
+	colunas = int(valores[3]) # numero de colunas.
+	matrizComPontoVirgula = entrada[1:] # mapa representado como matriz.
+	
+	idxLinha = 0
 	matriz = [[0 for x in range(colunas)] for y in range(linhas)] 
-	matriz[0][0] = 0
-	matriz[0][1] = 1
-	matriz[0][2] = 2
-	matriz[0][3] = 1
-	matriz[0][4] = 3
-
-	matriz[1][0] = 1
-	matriz[1][1] = 1
-	matriz[1][2] = 2
-	matriz[1][3] = 1
-	matriz[1][4] = 1
-	
-	matriz[2][0] = 1
-	matriz[2][1] = 2
-	matriz[2][2] = 2
-	matriz[2][3] = 1
-	matriz[2][4] = 1
-	
-	matriz[3][0] = 1
-	matriz[3][1] = 1
-	matriz[3][2] = 1
-	matriz[3][3] = 1
-	matriz[3][4] = 1
-
-	
-
+	for linhasMatriz in range(0, len(matrizComPontoVirgula)):
+		valoresIndividuais = matrizComPontoVirgula[linhasMatriz][0].split(";")
+		for colunasMatriz in range(0, len(valoresIndividuais)):
+			matriz[linhasMatriz][colunasMatriz] = int(valoresIndividuais[colunasMatriz])
+		
 	estado_inicial = encontraPosicoes (matriz, linhas, colunas, 0)
 	estados_finais = encontraPosicoes (matriz, linhas, colunas, 3)
 	
