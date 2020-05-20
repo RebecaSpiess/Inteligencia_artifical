@@ -2,6 +2,7 @@ from math import sqrt
 import os
 import csv
 
+
 def busca_a_estrela (matriz, linhas, colunas, estado_inicial, estados_finais):
 	distancia_meta = {}
 	distancia_percorrida = {}
@@ -103,13 +104,15 @@ def apresenta_solucao (estado, predecessores, iteracao):
 	print(caminho)
 
 if __name__ == "__main__":
-	problema = open(r"C:\Users\spies\Documents\IA\Inteligencia_artifical\Matriz.csv") 
+	diretorioAtual = os.path.dirname(os.path.realpath(__file__))
+	problema = open(diretorioAtual + "\\Matriz.csv", "r") 
 	leitor_problema = csv.reader(problema)
 	entrada = list(leitor_problema)
 	valores = entrada[0][0].split(";")
 	linhas = int(valores[1]) # numero de linhas.
 	colunas = int(valores[3]) # numero de colunas.
 	matrizComPontoVirgula = entrada[1:] # mapa representado como matriz.
+	problema.close()
 	
 	idxLinha = 0
 	matriz = [[0 for x in range(colunas)] for y in range(linhas)] 
